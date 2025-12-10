@@ -2,6 +2,7 @@ import { ExternalLink, Github } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { motion } from "framer-motion";
 
 const Projects = () => {
   const projects = [
@@ -56,89 +57,121 @@ const Projects = () => {
       demo: "#",
     },
   ];
-//
-https: return (
-  <section id="projects" className="py-20 sm:py-32">
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            Featured <span className="text-accent">Projects</span>
-          </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-accent to-primary mx-auto mb-4" />
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A selection of projects I've built, from hackathon wins to
-            production systems
-          </p>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {projects.map((project, index) => (
-            <Card
-              key={index}
-              className="p-6 border-border hover:border-accent hover:shadow-xl transition-all group"
-            >
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-xl font-semibold group-hover:text-accent transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {project.description}
-                  </p>
-                </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
 
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag, tagIndex) => (
-                    <Badge
-                      key={tagIndex}
-                      variant="secondary"
-                      className="text-xs"
-                    >
-                      {tag}
-                    </Badge>
-                  ))}
-                </div>
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  };
 
-                <div className="flex gap-3 pt-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="flex-1 hover:border-accent hover:text-accent"
-                    asChild
-                  >
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
+  return (
+    <section id="projects" className="py-20 sm:py-32">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-12"
+          >
+            <div className="flex items-center gap-2 text-2xl font-bold text-primary mb-4 font-mono">
+              <span>$</span>
+              <h2>./list_projects.sh</h2>
+            </div>
+            <div className="w-full h-px bg-primary/30" />
+          </motion.div>
+
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            {projects.map((project, index) => (
+              <motion.div key={index} variants={itemVariants}>
+                <Card className="p-6 border-primary bg-black/50 hover:bg-primary/10 transition-all group h-full flex flex-col rounded-none font-mono">
+                  <div className="space-y-4 flex-1">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-primary/50">{`>`}</span>
+                        <h3 className="text-xl font-bold text-primary group-hover:underline decoration-primary/50 underline-offset-4 transition-all">
+                          {project.title}
+                        </h3>
+                      </div>
+                      <p className="text-primary/70 text-sm leading-relaxed border-l-2 border-primary/20 pl-3">
+                        {project.description}
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag, tagIndex) => (
+                        <Badge
+                          key={tagIndex}
+                          variant="outline"
+                          className="text-xs border-primary text-primary rounded-none"
+                        >
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 pt-6 mt-auto">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1 border-primary text-primary hover:bg-primary hover:text-black rounded-none transition-colors"
+                      asChild
                     >
-                      <Github className="h-4 w-4 mr-2" />
-                      GitHub
-                    </a>
-                  </Button>
-                  <Button
-                    size="sm"
-                    className="flex-1 bg-accent hover:bg-accent/90 text-accent-foreground"
-                    asChild
-                  >
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Github className="h-4 w-4 mr-2" />
+                        GitHub
+                      </a>
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="flex-1 bg-primary text-black hover:bg-primary/90 rounded-none transition-colors"
+                      asChild
                     >
-                      <ExternalLink className="h-4 w-4 mr-2" />
-                      Demo
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </Card>
-          ))}
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ExternalLink className="h-4 w-4 mr-2" />
+                        Demo
+                      </a>
+                    </Button>
+                  </div>
+                </Card>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </div>
-    </div>
-  </section>
-);
+    </section>
+  );
 };
 
 export default Projects;

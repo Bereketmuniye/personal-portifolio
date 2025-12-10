@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Send, Github, Linkedin, Mail } from "lucide-react";
+import { Send, Github, Linkedin, Mail, Terminal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
+import { motion } from "framer-motion";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -62,78 +63,97 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 sm:py-32 bg-muted/30">
+    <section id="contact" className="py-20 sm:py-32">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-              Get In <span className="text-accent">Touch</span>
-            </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-accent to-primary mx-auto mb-4" />
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              Have a project in mind or want to discuss opportunities? Feel free
-              to reach out!
-            </p>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-12"
+          >
+            <div className="flex items-center gap-2 text-2xl font-bold text-primary mb-4 font-mono">
+              <span>$</span>
+              <h2>./send_message.sh</h2>
+            </div>
+            <div className="w-full h-px bg-primary/30" />
+          </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Contact Form */}
-            <Card className="p-6 border-border">
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div>
-                  <Input
-                    name="name"
-                    placeholder="Your Name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    className="border-border focus:border-accent"
-                  />
-                </div>
-                <div>
-                  <Input
-                    name="email"
-                    type="email"
-                    placeholder="Your Email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    className="border-border focus:border-accent"
-                  />
-                </div>
-                <div>
-                  <Textarea
-                    name="message"
-                    placeholder="Your Message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    required
-                    rows={5}
-                    className="border-border focus:border-accent resize-none"
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      <Send className="h-4 w-4 mr-2" />
-                      Send Message
-                    </>
-                  )}
-                </Button>
-              </form>
-            </Card>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+            >
+              <Card className="p-6 border-primary bg-black/50 h-full rounded-none font-mono">
+                <form onSubmit={handleSubmit} className="space-y-4">
+                  <div className="space-y-1">
+                    <label className="text-xs text-primary/70 ml-1">--name</label>
+                    <Input
+                      name="name"
+                      placeholder="Enter your name..."
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      className="border-primary/50 bg-black focus:border-primary focus:ring-0 rounded-none text-primary placeholder:text-primary/30"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs text-primary/70 ml-1">--email</label>
+                    <Input
+                      name="email"
+                      type="email"
+                      placeholder="Enter your email..."
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="border-primary/50 bg-black focus:border-primary focus:ring-0 rounded-none text-primary placeholder:text-primary/30"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label className="text-xs text-primary/70 ml-1">--message</label>
+                    <Textarea
+                      name="message"
+                      placeholder="Type your message..."
+                      value={formData.message}
+                      onChange={handleChange}
+                      required
+                      rows={5}
+                      className="border-primary/50 bg-black focus:border-primary focus:ring-0 rounded-none text-primary placeholder:text-primary/30 resize-none"
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    className="w-full bg-primary text-black hover:bg-primary/90 rounded-none font-bold mt-4"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <span className="animate-pulse">Sending...</span>
+                    ) : (
+                      <>
+                        <Terminal className="h-4 w-4 mr-2" />
+                        Execute Send
+                      </>
+                    )}
+                  </Button>
+                </form>
+              </Card>
+            </motion.div>
 
             {/* Contact Links */}
-            <div className="space-y-4">
-              <Card className="p-6 border-border">
-                <h3 className="font-semibold mb-4 text-lg">
-                  Connect With Me
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="space-y-4"
+            >
+              <Card className="p-6 border-primary bg-black/50 rounded-none font-mono">
+                <h3 className="font-bold mb-4 text-lg text-primary border-b border-primary/30 pb-2">
+                  Network Interfaces
                 </h3>
                 <div className="space-y-3">
                   {contactLinks.map((link, index) => {
@@ -144,14 +164,14 @@ const Contact = () => {
                         href={link.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 p-3 rounded-lg border border-border hover:border-accent hover:bg-accent/5 transition-all group"
+                        className="flex items-center gap-3 p-3 border border-primary/30 hover:bg-primary/10 transition-all group"
                       >
-                        <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                          <Icon className="h-5 w-5 text-accent" />
+                        <div className="w-8 h-8 flex items-center justify-center text-primary">
+                          <Icon className="h-5 w-5" />
                         </div>
-                        <div>
-                          <p className="font-medium text-sm">{link.label}</p>
-                          <p className="text-xs text-muted-foreground">
+                        <div className="overflow-hidden">
+                          <p className="font-bold text-sm text-primary">{link.label}</p>
+                          <p className="text-xs text-primary/70 truncate">
                             {link.username}
                           </p>
                         </div>
@@ -161,16 +181,18 @@ const Contact = () => {
                 </div>
               </Card>
 
-              <Card className="p-6 border-border bg-gradient-to-br from-accent/5 to-primary/5">
-                <h3 className="font-semibold mb-2">Based in</h3>
-                <p className="text-muted-foreground">
-                  Addis Ababa, Ethiopia
-                </p>
-                <p className="text-sm text-muted-foreground mt-2">
-                  Open to remote opportunities worldwide
-                </p>
+              <Card className="p-6 border-primary bg-black/50 rounded-none font-mono">
+                <h3 className="font-bold mb-2 text-primary">Location Data</h3>
+                <div className="flex items-center gap-2 text-primary/70">
+                  <span className="text-primary">{`>`}</span>
+                  <p>Addis Ababa, Ethiopia</p>
+                </div>
+                <div className="flex items-center gap-2 text-primary/70 mt-1">
+                  <span className="text-primary">{`>`}</span>
+                  <p className="text-sm">Remote access: Enabled</p>
+                </div>
               </Card>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>

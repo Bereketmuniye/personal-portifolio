@@ -8,78 +8,80 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222 47% 11%;
+    /* Terminal Theme - Default Dark */
+    --background: 0 0% 5%;
+    /* Very dark gray/black */
+    --foreground: 120 100% 50%;
+    /* Terminal Green */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card: 0 0% 8%;
+    --card-foreground: 120 100% 50%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 120 100% 50%;
 
-    --primary: 222 47% 11%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 120 100% 50%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 214 32% 91%;
-    --secondary-foreground: 222 47% 11%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 120 100% 50%;
 
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 120 60% 40%;
 
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 120 100% 50%;
+    --accent-foreground: 0 0% 0%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 0%;
 
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 217 91% 60%;
+    --border: 120 100% 50%;
+    --input: 0 0% 10%;
+    --ring: 120 100% 50%;
 
-    --radius: 0.75rem;
+    --radius: 0;
+    /* No rounded corners for terminal look */
 
-    /* Portfolio-specific design tokens */
-    --navy: 222 47% 11%;
-    --electric-blue: 217 91% 60%;
-    --gradient-start: 222 47% 11%;
-    --gradient-end: 217 91% 60%;
-    
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-glow: 0 0 40px hsl(var(--electric-blue) / 0.3);
+    /* Terminal-specific design tokens */
+    --terminal-green: 120 100% 50%;
+    --terminal-black: 0 0% 5%;
+
+    --transition-smooth: all 0.1s steps(5, end);
+    /* Jerky, retro transition */
+    --shadow-glow: 0 0 10px hsl(var(--terminal-green) / 0.5);
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    /* Same as root since terminal is dark by default */
+    --background: 0 0% 5%;
+    --foreground: 120 100% 50%;
 
-    --card: 217 33% 17%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 8%;
+    --card-foreground: 120 100% 50%;
 
-    --popover: 217 33% 17%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 8%;
+    --popover-foreground: 120 100% 50%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222 47% 11%;
+    --primary: 120 100% 50%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 120 100% 50%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 120 60% 40%;
 
-    --accent: 217 91% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 120 100% 50%;
+    --accent-foreground: 0 0% 0%;
 
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 0%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 217 91% 60%;
-    
-    --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
-    --shadow-glow: 0 0 40px hsl(var(--electric-blue) / 0.5);
+    --border: 120 100% 50%;
+    --input: 0 0% 10%;
+    --ring: 120 100% 50%;
+
+    --shadow-glow: 0 0 10px hsl(var(--terminal-green) / 0.5);
   }
 }
 
@@ -89,39 +91,60 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
+    font-family: 'VT323', monospace;
+    font-size: 1.25rem;
+    /* Larger base font size for pixel font */
+    background-image: radial-gradient(rgba(0, 150, 0, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    text-shadow: 0 0 2px rgba(0, 255, 0, 0.5);
+    /* CRT Glow */
   }
-  
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-normal;
+    /* Pixel fonts usually don't need bold weight */
+    text-shadow: 0 0 4px rgba(0, 255, 0, 0.7);
+  }
+
   html {
     scroll-behavior: smooth;
   }
-  
+
   /* Custom animations */
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
+  @keyframes blink {
+
+    0%,
+    100% {
       opacity: 1;
-      transform: translateY(0);
     }
-  }
-  
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
+
     50% {
-      transform: translateY(-10px);
+      opacity: 0;
     }
   }
-  
-  .animate-fade-in-up {
-    animation: fade-in-up 0.6s ease-out forwards;
+
+  .animate-blink {
+    animation: blink 1s step-end infinite;
   }
-  
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+
+  /* CRT Scanline effect */
+  body::after {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 9999;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
   }
 }

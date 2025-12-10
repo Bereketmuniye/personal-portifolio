@@ -1,161 +1,171 @@
-import { ArrowRight, Github, Linkedin, Mail, Terminal } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { Terminal } from "lucide-react";
 
 const Hero = () => {
-  const [text, setText] = useState("");
-  const fullText = "Full-Stack Developer | System Architect | Tech Enthusiast";
-  const [showCursor, setShowCursor] = useState(true);
+  const [input, setInput] = useState("");
+  const [history, setHistory] = useState<
+    { command: string; output: React.ReactNode }[]
+  >([]);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  const initialHistory = [
+    {
+      command: "whoami",
+      output: (
+        <div className="space-y-2">
+          <p>Bereket Muniye</p>
+          <p className="text-primary/80">Full-Stack Developer | Laravel & Vue.js Enthusiast</p>
+        </div>
+      ),
+    },
+    {
+      command: "cat intro.txt",
+      output: (
+        <p className="max-w-2xl">
+          I build robust, scalable web applications. Passionate about clean code,
+          open source, and solving complex problems.
+        </p>
+      ),
+    },
+  ];
 
   useEffect(() => {
-    let currentIndex = 0;
-    const interval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setText(fullText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(interval);
-      }
-    }, 50);
-
-    return () => clearInterval(interval);
+    // Simulate initial boot sequence
+    const timer = setTimeout(() => {
+      setHistory(initialHistory);
+    }, 1000);
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    const cursorInterval = setInterval(() => {
-      setShowCursor((prev) => !prev);
-    }, 530);
-    return () => clearInterval(cursorInterval);
-  }, []);
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [history]);
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+  const handleCommand = (cmd: string) => {
+    const trimmedCmd = cmd.trim().toLowerCase();
+    let output: React.ReactNode = "";
+
+    switch (trimmedCmd) {
+      case "help":
+        output = (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
+            <div className="flex gap-2"><span className="text-white font-bold">about</span> - View about me</div>
+            <div className="flex gap-2"><span className="text-white font-bold">skills</span> - List technical skills</div>
+            <div className="flex gap-2"><span className="text-white font-bold">projects</span> - View portfolio</div>
+            <div className="flex gap-2"><span className="text-white font-bold">contact</span> - Get in touch</div>
+            <div className="flex gap-2"><span className="text-white font-bold">clear</span> - Clear terminal</div>
+            <div className="flex gap-2"><span className="text-white font-bold">whoami</span> - User info</div>
+          </div>
+        );
+        break;
+      case "about":
+        output = "Navigating to About section...";
+        document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "skills":
+        output = "Navigating to Skills section...";
+        document.getElementById("skills")?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "projects":
+        output = "Navigating to Projects section...";
+        document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "contact":
+        output = "Opening communication channels...";
+        document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+        break;
+      case "clear":
+        setHistory([]);
+        return;
+      case "whoami":
+        output = "Bereket Muniye - Full Stack Developer";
+        break;
+      case "":
+        output = "";
+        break;
+      default:
+        output = `Command not found: ${trimmedCmd}. Type 'help' for available commands.`;
     }
+
+    setHistory((prev) => [...prev, { command: cmd, output }]);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleCommand(input);
+    setInput("");
   };
 
   return (
-    <section
-      id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
-    >
-      {/* Content */}
+    <section id="hero" className="min-h-screen pt-20 flex flex-col justify-center relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-            className="border border-primary bg-black/50 p-6 rounded-none shadow-[0_0_20px_rgba(0,255,0,0.1)]"
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          className="w-full max-w-4xl mx-auto border-2 border-primary bg-black/80 shadow-[0_0_20px_rgba(0,255,0,0.2)] min-h-[60vh] flex flex-col rounded-none"
+        >
+          {/* Terminal Header */}
+          <div className="bg-primary/20 p-2 border-b-2 border-primary flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <Terminal className="w-4 h-4 text-primary" />
+              <span className="text-xs font-mono text-primary font-bold">
+                root@bereket: ~
+              </span>
+            </div>
+            <div className="flex gap-2">
+              <div className="w-3 h-3 rounded-full bg-red-500/50" />
+              <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+              <div className="w-3 h-3 rounded-full bg-green-500/50" />
+            </div>
+          </div>
+
+          {/* Terminal Content */}
+          <div
+            className="flex-1 p-6 font-mono text-sm sm:text-base overflow-y-auto max-h-[60vh] scrollbar-hide"
+            onClick={() => inputRef.current?.focus()}
           >
-            <div className="flex items-center gap-2 border-b border-primary/30 pb-4 mb-4">
-              <div className="w-3 h-3 rounded-full bg-red-500/50"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500/50"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500/50"></div>
-              <span className="ml-2 text-xs text-primary/50 font-mono">bash -- login</span>
+            <div className="space-y-4">
+              <div className="text-primary/50 text-xs mb-4">
+                Last login: {new Date().toUTCString()} on ttys000
+              </div>
+
+              {history.map((entry, index) => (
+                <div key={index} className="space-y-1">
+                  <div className="flex gap-2 items-center text-primary">
+                    <span className="font-bold">root@bereket:~#</span>
+                    <span className="text-white">{entry.command}</span>
+                  </div>
+                  <div className="text-primary/80 pl-4 whitespace-pre-wrap">
+                    {entry.output}
+                  </div>
+                </div>
+              ))}
+
+              <form onSubmit={handleSubmit} className="flex gap-2 items-center text-primary">
+                <span className="font-bold shrink-0">root@bereket:~#</span>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  className="bg-transparent border-none outline-none text-white flex-1 focus:ring-0 p-0 font-mono"
+                  autoFocus
+                  spellCheck={false}
+                  autoComplete="off"
+                />
+              </form>
+              <div ref={bottomRef} />
             </div>
+          </div>
 
-            <div className="space-y-6 font-mono">
-              <div className="space-y-2">
-                <p className="text-primary/80">Last login: {new Date().toDateString()} on ttys000</p>
-                <div className="flex items-center gap-2 text-xl sm:text-2xl md:text-3xl font-bold text-primary">
-                  <span className="text-primary">$</span>
-                  <h1>whoami</h1>
-                </div>
-                <p className="text-xl sm:text-2xl md:text-3xl text-white pl-6">
-                  Bereket Muniye
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-lg sm:text-xl text-primary font-bold">
-                  <span>$</span>
-                  <h2>cat skills.txt</h2>
-                </div>
-                <p className="text-lg sm:text-xl text-primary/80 pl-6 min-h-[3rem]">
-                  {text}
-                  <span className={`${showCursor ? "opacity-100" : "opacity-0"} transition-opacity duration-100`}>_</span>
-                </p>
-              </div>
-
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-lg sm:text-xl text-primary font-bold">
-                  <span>$</span>
-                  <h2>./init_contact.sh</h2>
-                </div>
-
-                {/* CTA Buttons */}
-                <div className="flex flex-col sm:flex-row gap-4 pl-6 pt-2">
-                  <Button
-                    size="lg"
-                    onClick={() => scrollToSection("projects")}
-                    className="group bg-primary text-black hover:bg-primary/90 rounded-none font-mono font-bold"
-                  >
-                    View Projects
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    onClick={() => scrollToSection("contact")}
-                    className="border-primary text-primary hover:bg-primary/10 rounded-none font-mono"
-                  >
-                    Contact Me
-                  </Button>
-                </div>
-              </div>
-
-              {/* Social Links */}
-              <div className="pt-4 border-t border-primary/30 mt-8">
-                <p className="text-xs text-primary/50 mb-4"># Connect via SSH (Social Shell Handlers)</p>
-                <div className="flex gap-4">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="hover:text-primary hover:bg-primary/10 rounded-none"
-                    asChild
-                  >
-                    <a
-                      href="https://github.com/Bereketmuniye"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="GitHub"
-                    >
-                      <Github className="h-5 w-5" />
-                    </a>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="hover:text-primary hover:bg-primary/10 rounded-none"
-                    asChild
-                  >
-                    <a
-                      href="https://www.linkedin.com/in/bereket-muniye-039273294/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn"
-                    >
-                      <Linkedin className="h-5 w-5" />
-                    </a>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="hover:text-primary hover:bg-primary/10 rounded-none"
-                    asChild
-                  >
-                    <a href="mailto:bereketmuniye@gmail.com" aria-label="Email">
-                      <Mail className="h-5 w-5" />
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
+          {/* Hint Footer */}
+          <div className="p-2 border-t border-primary/30 bg-black text-xs text-primary/50 font-mono text-center">
+            Type 'help' to see available commands
+          </div>
+        </motion.div>
       </div>
     </section>
   );

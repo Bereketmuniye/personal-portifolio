@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Send, Github, Linkedin, Mail, Terminal, Phone } from "lucide-react";
+import { Send, Github, Linkedin, Mail, Terminal, Phone, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -53,6 +53,12 @@ const Contact = () => {
       label: "LinkedIn",
       href: "https://www.linkedin.com/in/bereket-muniye-039273294/",
       username: "bereketmuniye",
+    },
+    {
+      icon: MessageCircle,
+      label: "Telegram Channel",
+      href: "https://t.me/bek_devspace",
+      username: "Bek Dev",
     },
     {
       icon: Mail,

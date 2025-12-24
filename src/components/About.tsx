@@ -61,6 +61,8 @@ const About = () => {
           </motion.div>
 
           <div className="space-y-8">
+
+
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -68,7 +70,7 @@ const About = () => {
               transition={{ duration: 0.5 }}
             >
               <Card className="p-8 border-primary bg-black/60 backdrop-blur-sm rounded-none relative overflow-hidden group hover:border-primary/80 transition-all hover:shadow-[0_0_30px_rgba(0,255,0,0.2)] fancy-card animate-glow-pulse">
-                <motion.div 
+                <motion.div
                   className="absolute top-0 left-0 h-1 bg-primary/20 group-hover:bg-primary transition-all"
                   initial={{ width: 0 }}
                   whileInView={{ width: "100%" }}
@@ -76,7 +78,7 @@ const About = () => {
                   transition={{ duration: 0.8 }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
+
                 {/* Animated corner decorations */}
                 <motion.div
                   className="absolute top-4 left-4 w-2 h-2 border-t-2 border-l-2 border-primary/50 group-hover:border-primary"
@@ -98,7 +100,7 @@ const About = () => {
                   animate={{ opacity: [0.5, 1, 0.5] }}
                   transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
                 />
-                
+
                 {/* Shimmer effect */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity animate-shimmer pointer-events-none" />
                 <p className="text-lg leading-relaxed text-primary/90 font-mono relative z-10">
@@ -110,6 +112,9 @@ const About = () => {
                   <br />
                   <span className="text-primary opacity-50 mr-4">3</span>
                   I specialize in full-stack development using <span className="text-white font-bold">Laravel</span>, <span className="text-white font-bold">Angular</span>, <span className="text-white font-bold">ASP.NET</span>, <span className="text-white font-bold">React</span>, and <span className="text-white font-bold">Nest.js</span>, with expertise in database optimization, API design, and DevOps practices.
+                  <br />
+                  <span className="text-primary opacity-50 mr-4">4</span>
+                  <span className="text-primary/60 italic">// Fun fact: I've spent more time debugging than coding. It's a lifestyle choice. 🐛</span>
                 </p>
               </Card>
             </motion.div>
@@ -127,14 +132,14 @@ const About = () => {
                   <motion.div key={index} variants={itemVariants}>
                     <Card className="p-6 border-primary bg-black/60 backdrop-blur-sm hover:bg-primary/10 hover:border-primary/80 transition-all group h-full rounded-none font-mono relative overflow-hidden hover:shadow-[0_0_20px_rgba(0,255,0,0.15)] fancy-card float-element">
                       <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                      
+
                       {/* Floating icon glow */}
                       <motion.div
                         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-primary/5 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity"
                         animate={{ scale: [1, 1.2, 1] }}
                         transition={{ duration: 3, repeat: Infinity }}
                       />
-                      
+
                       {/* Shimmer effect */}
                       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity animate-shimmer pointer-events-none" />
                       <div className="relative z-10">

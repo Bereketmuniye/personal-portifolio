@@ -76,6 +76,15 @@ const Footer = () => {
               Framer Motion
             </motion.span>
           </p>
+          <motion.p 
+            className="text-xs text-primary/40 mt-2 italic"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+          >
+            // "It's not a bug, it's a feature" - Every developer ever 🐛
+          </motion.p>
         </motion.div>
       </div>
     </footer>

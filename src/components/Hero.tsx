@@ -17,7 +17,7 @@ const Hero = () => {
       command: "whoami",
       output: (
         <div className="space-y-2">
-          <motion.p 
+          <motion.p
             className="text-white font-bold text-lg text-glow-strong animate-neon-pulse"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -57,7 +57,7 @@ const Hero = () => {
       case "help":
         output = (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               className="flex gap-2 items-center group/help"
@@ -66,7 +66,7 @@ const Hero = () => {
               <span className="text-white font-bold group-hover/help:text-primary transition-colors">about</span>
               <span className="text-primary/60">- View about me</span>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.05 }}
@@ -76,7 +76,7 @@ const Hero = () => {
               <span className="text-white font-bold group-hover/help:text-primary transition-colors">skills</span>
               <span className="text-primary/60">- List technical skills</span>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
@@ -86,7 +86,7 @@ const Hero = () => {
               <span className="text-white font-bold group-hover/help:text-primary transition-colors">projects</span>
               <span className="text-primary/60">- View portfolio</span>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.15 }}
@@ -96,7 +96,7 @@ const Hero = () => {
               <span className="text-white font-bold group-hover/help:text-primary transition-colors">contact</span>
               <span className="text-primary/60">- Get in touch</span>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.2 }}
@@ -106,7 +106,7 @@ const Hero = () => {
               <span className="text-white font-bold group-hover/help:text-primary transition-colors">clear</span>
               <span className="text-primary/60">- Clear terminal</span>
             </motion.div>
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.25 }}
@@ -115,6 +115,16 @@ const Hero = () => {
               <span className="text-primary/50 group-hover/help:text-primary transition-colors">$</span>
               <span className="text-white font-bold group-hover/help:text-primary transition-colors">whoami</span>
               <span className="text-primary/60">- User info</span>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="flex gap-2 items-center group/help"
+            >
+              <span className="text-primary/50 group-hover/help:text-primary transition-colors">$</span>
+              <span className="text-white font-bold group-hover/help:text-primary transition-colors">meme</span>
+              <span className="text-primary/60">- Show coder memes</span>
             </motion.div>
           </div>
         );
@@ -157,6 +167,60 @@ const Hero = () => {
       case "whoami":
         output = "Bereket Muniye - Full Stack Developer";
         break;
+      case "meme":
+        const memes = [
+          {
+            text: "99 little bugs in the code,\n99 little bugs in the code.\nTake one down, patch it around,\n117 little bugs in the code.",
+            emoji: "🐛"
+          },
+          {
+            text: "It works on my machine! 🤷",
+            emoji: "💻"
+          },
+          {
+            text: "I don't always test my code,\nbut when I do, I do it in production.",
+            emoji: "🚀"
+          },
+          {
+            text: "There are only 10 types of people:\nthose who understand binary\nand those who don't.",
+            emoji: "🔢"
+          },
+          {
+            text: "Copy-paste from Stack Overflow:\nThe only way to code.",
+            emoji: "📋"
+          },
+          {
+            text: "Debugging is like being a detective\nin a crime movie where you're also the murderer.",
+            emoji: "🔍"
+          },
+          {
+            text: "First rule of programming:\nIf it works, don't touch it!",
+            emoji: "✋"
+          },
+          {
+            text: "I have no idea what I'm doing,\nbut I'm doing it really, really well.",
+            emoji: "😎"
+          },
+          {
+            text: "Code is like humor.\nWhen you have to explain it, it's bad.",
+            emoji: "😅"
+          },
+          {
+            text: "Real programmers count from 0.\nNot 1. Zero.",
+            emoji: "0️⃣"
+          }
+        ];
+        const randomMeme = memes[Math.floor(Math.random() * memes.length)];
+        output = (
+          <div className="space-y-2 p-4 border border-primary/30 bg-primary/5 rounded-none">
+            <div className="text-4xl mb-2">{randomMeme.emoji}</div>
+            <pre className="text-primary/90 whitespace-pre-wrap font-mono text-sm leading-relaxed">
+              {randomMeme.text}
+            </pre>
+            <div className="text-xs text-primary/50 mt-2">-- Random coder wisdom</div>
+          </div>
+        );
+        break;
       case "":
         output = "";
         break;
@@ -181,7 +245,7 @@ const Hero = () => {
     <section id="hero" className="min-h-screen pt-20 flex flex-col justify-center relative overflow-hidden">
       {/* Animated background grid with enhanced effects */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#00ff0022_1px,transparent_1px),linear-gradient(to_bottom,#00ff0022_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_70%,transparent_110%)] animate-rotate-gradient" />
-      
+
       {/* Floating particles */}
       {[...Array(20)].map((_, i) => (
         <motion.div
@@ -205,8 +269,10 @@ const Hero = () => {
           }}
         />
       ))}
-      
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -215,15 +281,15 @@ const Hero = () => {
         >
           {/* Animated border glow with rotation */}
           <div className="absolute inset-0 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-rotate-gradient" />
-          
+
           {/* Corner accents */}
           <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
           <div className="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
           <div className="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
           <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-          
+
           {/* Terminal Header */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -241,15 +307,15 @@ const Hero = () => {
               </span>
             </div>
             <div className="flex gap-2">
-              <motion.div 
+              <motion.div
                 className="w-3 h-3 rounded-full bg-red-500/70 shadow-[0_0_8px_rgba(255,0,0,0.6)]"
                 whileHover={{ scale: 1.2 }}
               />
-              <motion.div 
+              <motion.div
                 className="w-3 h-3 rounded-full bg-yellow-500/70 shadow-[0_0_8px_rgba(255,255,0,0.6)]"
                 whileHover={{ scale: 1.2 }}
               />
-              <motion.div 
+              <motion.div
                 className="w-3 h-3 rounded-full bg-green-500/70 shadow-[0_0_8px_rgba(0,255,0,0.6)]"
                 whileHover={{ scale: 1.2 }}
               />
@@ -264,9 +330,9 @@ const Hero = () => {
           >
             {/* Scanline effect overlay */}
             <div className="absolute inset-0 pointer-events-none opacity-[0.03] bg-[linear-gradient(transparent_50%,rgba(0,255,0,0.03)_50%)] bg-[length:100%_4px]" />
-            
+
             <div className="space-y-4 relative z-10">
-              <motion.div 
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
@@ -276,8 +342,8 @@ const Hero = () => {
               </motion.div>
 
               {history.map((entry, index) => (
-                <motion.div 
-                  key={index} 
+                <motion.div
+                  key={index}
                   initial={{ opacity: 0, x: -10 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -287,7 +353,7 @@ const Hero = () => {
                     <span className="font-bold drop-shadow-[0_0_4px_rgba(0,255,0,0.5)]">root@bereket:~#</span>
                     <span className="text-white font-medium">{entry.command}</span>
                   </div>
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2 }}
@@ -298,8 +364,8 @@ const Hero = () => {
                 </motion.div>
               ))}
 
-              <motion.form 
-                onSubmit={handleSubmit} 
+              <motion.form
+                onSubmit={handleSubmit}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
@@ -336,7 +402,7 @@ const Hero = () => {
           </div>
 
           {/* Hint Footer */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
@@ -346,7 +412,7 @@ const Hero = () => {
           </motion.div>
         </motion.div>
       </div>
-    </section>
+    </section >
   );
 };
 

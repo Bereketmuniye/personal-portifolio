@@ -7,20 +7,51 @@ import { motion } from "framer-motion";
 const Projects = () => {
   const projects = [
     {
-      title: "ABookRental",
+      title: "Broker Marketplace Platform",
       description:
-        "Laravel-based book rental platform with role-based dashboards for admins and users. Features inventory management, rental tracking, and automated notifications.",
+        "Designed a platform connecting brokers with clients, featuring secure communication and role-based access. Built with modern microservices architecture. BrokerHub Ethiopia - Find your perfect home with trusted brokers.",
+      tags: ["Nest.js", "Golang", "Microservices"],
+      github: "#",
+      demo: "https://broker-marketplace-frontend.vercel.app/",
+    },
+    {
+      title: "Real-Time Queue Management System",
+      description:
+        "Built a live queue display system with audio announcements, digital displays, and administrative controls. Features Ethiopian calendar support and WebSocket integration.",
+      tags: ["Laravel", "WebSockets", "Livewire"],
+      github: "#",
+      demo: "#",
+    },
+    {
+      title: "File Encryption Tool",
+      description:
+        "Developed a high-performance CLI tool for secure file encryption and decryption using Rust. Features AES-256 encryption with optimized performance.",
+      tags: ["Rust", "CLI", "Security"],
+      github: "https://github.com/Bereketmuniye/rust-file-encryption",
+      demo: "#",
+    },
+    {
+      title: "Book Rental Application",
+      description:
+        "Created a peer-to-peer book rental platform using Laravel and MySQL. Features inventory management, rental tracking, and automated notifications.",
       tags: ["Laravel", "MySQL", "Bootstrap"],
       github: "https://github.com/Bereketmuniye/book_rental_application",
       demo: "#",
     },
     {
+      title: "LMIS - School Management System",
+      description:
+        "Designed a comprehensive school management system with modules for attendance, academics, registration, quiz and assignment management.",
+      tags: ["Laravel", "MySQL", "TailwindCSS"],
+      github: "https://github.com/Bereketmuniye/LMIS",
+      demo: "#",
+    },
+    {
       title: "Knowledge Portal",
       description:
-        "Internal team communication platform integrating Chatify and Botman. Enables real-time messaging, knowledge sharing, and AI-assisted responses.",
+        "Industrial project featuring a comprehensive knowledge portal with posting, chatting, emailing, FAQs, and file sharing capabilities. Integrated Chatify and Botman.",
       tags: ["Laravel", "Chatify", "Botman"],
-      github:
-        "https://github.com/Bereketmuniye/knowledge-portal-using-laravel-",
+      github: "https://github.com/Bereketmuniye/knowledge-portal-using-laravel-",
       demo: "#",
     },
     {
@@ -29,31 +60,6 @@ const Projects = () => {
         "Hackathon-winning project built in 24 hours using Laravel. Streamlines fertilizer distribution management for agricultural cooperatives.",
       tags: ["Laravel", "Bootstrap", "MySQL"],
       github: "#",
-      demo: "#",
-    },
-    {
-      title: "Queue Display System",
-      description:
-        "Real-time queue management system with Livewire. Features audio announcements, digital displays, and administrative controls for efficient service.",
-      tags: ["Laravel", "Livewire", "WebSockets"],
-      github: "#",
-      demo: "#",
-    },
-
-    {
-      title: "LMIS",
-      description:
-        "Automate school grading systemwith quiz and assignment. Features audio announcements, digital displays, and administrative controls for efficient service.",
-      tags: ["Laravel", "MySQL", "TailwindCSS"],
-      github: "https://github.com/Bereketmuniye/LMIS",
-      demo: "#",
-    },
-    {
-      title: "File Encryption",
-      description:
-        "Rust-based command-line tool for encrypting and decrypting files. Securely encrypts files using AES-256 encryption and provides command-line interface for easy file management.",
-      tags: ["Rust"],
-      github: "github.com/Bereketmuniye/rust-file-encryption",
       demo: "#",
     },
   ];
@@ -106,63 +112,135 @@ const Projects = () => {
           >
             {projects.map((project, index) => (
               <motion.div key={index} variants={itemVariants}>
-                <Card className="p-6 border-primary bg-black/50 hover:bg-primary/10 transition-all group h-full flex flex-col rounded-none font-mono">
-                  <div className="space-y-4 flex-1">
+                <Card className="p-6 border-primary bg-black/60 backdrop-blur-sm hover:bg-primary/10 hover:border-primary/80 transition-all group h-full flex flex-col rounded-none font-mono relative overflow-hidden hover:shadow-[0_0_30px_rgba(0,255,0,0.25)] fancy-card">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/0 via-primary/5 to-primary/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  {/* Animated corner brackets */}
+                  <motion.div
+                    className="absolute top-2 left-2 text-primary/30 group-hover:text-primary transition-colors"
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                  >
+                    {'{'}
+                  </motion.div>
+                  <motion.div
+                    className="absolute bottom-2 right-2 text-primary/30 group-hover:text-primary transition-colors"
+                    initial={{ opacity: 0, scale: 0 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 + 0.2 }}
+                  >
+                    {'}'}
+                  </motion.div>
+                  
+                  {/* Shimmer effect on hover */}
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity animate-shimmer pointer-events-none" />
+                  <div className="space-y-4 flex-1 relative z-10">
                     <div className="space-y-2">
                       <div className="flex items-center gap-2">
-                        <span className="text-primary/50">{`>`}</span>
-                        <h3 className="text-xl font-bold text-primary group-hover:underline decoration-primary/50 underline-offset-4 transition-all">
+                        <motion.span 
+                          className="text-primary/50 group-hover:text-primary transition-colors"
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          {`>`}
+                        </motion.span>
+                        <h3 className="text-xl font-bold text-primary group-hover:underline decoration-primary/50 underline-offset-4 transition-all group-hover:drop-shadow-[0_0_8px_rgba(0,255,0,0.6)]">
                           {project.title}
                         </h3>
                       </div>
-                      <p className="text-primary/70 text-sm leading-relaxed border-l-2 border-primary/20 pl-3">
+                      <p className="text-primary/80 text-sm leading-relaxed border-l-2 border-primary/30 group-hover:border-primary pl-3 transition-colors">
                         {project.description}
                       </p>
                     </div>
 
                     <div className="flex flex-wrap gap-2">
                       {project.tags.map((tag, tagIndex) => (
-                        <Badge
+                        <motion.div
                           key={tagIndex}
-                          variant="outline"
-                          className="text-xs border-primary text-primary rounded-none"
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: tagIndex * 0.05 }}
+                          whileHover={{ scale: 1.1 }}
                         >
-                          {tag}
-                        </Badge>
+                          <Badge
+                            variant="outline"
+                            className="text-xs border-primary text-primary rounded-none hover:bg-primary/20 transition-all cursor-default relative overflow-hidden group/badge"
+                          >
+                            <span className="relative z-10">{tag}</span>
+                            <motion.div
+                              className="absolute inset-0 bg-primary/30 opacity-0 group-hover/badge:opacity-100"
+                              initial={{ scale: 0 }}
+                              whileHover={{ scale: 1 }}
+                              transition={{ duration: 0.3 }}
+                            />
+                          </Badge>
+                        </motion.div>
                       ))}
                     </div>
                   </div>
 
-                  <div className="flex gap-3 pt-6 mt-auto">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="flex-1 border-primary text-primary hover:bg-primary hover:text-black rounded-none transition-colors"
-                      asChild
+                  <div className="flex gap-3 pt-6 mt-auto relative z-10">
+                    <motion.div 
+                      whileHover={{ scale: 1.05, y: -2 }} 
+                      whileTap={{ scale: 0.95 }}
+                      className="relative"
                     >
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="flex-1 border-primary text-primary hover:bg-primary hover:text-black rounded-none transition-all hover:shadow-[0_0_15px_rgba(0,255,0,0.5)] relative overflow-hidden group/btn"
+                        asChild
                       >
-                        <Github className="h-4 w-4 mr-2" />
-                        GitHub
-                      </a>
-                    </Button>
-                    <Button
-                      size="sm"
-                      className="flex-1 bg-primary text-black hover:bg-primary/90 rounded-none transition-colors"
-                      asChild
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <span className="relative z-10 flex items-center justify-center">
+                            <Github className="h-4 w-4 mr-2" />
+                            GitHub
+                          </span>
+                          <motion.div
+                            className="absolute inset-0 bg-primary/20"
+                            initial={{ x: "-100%" }}
+                            whileHover={{ x: "100%" }}
+                            transition={{ duration: 0.5 }}
+                          />
+                        </a>
+                      </Button>
+                    </motion.div>
+                    <motion.div 
+                      whileHover={{ scale: 1.05, y: -2 }} 
+                      whileTap={{ scale: 0.95 }}
+                      className="relative"
                     >
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <Button
+                        size="sm"
+                        className="flex-1 bg-primary text-black hover:bg-primary/90 rounded-none transition-all hover:shadow-[0_0_20px_rgba(0,255,0,0.6)] relative overflow-hidden group/btn animate-glow-pulse"
+                        asChild
                       >
-                        <ExternalLink className="h-4 w-4 mr-2" />
-                        Demo
-                      </a>
-                    </Button>
+                        <a
+                          href={project.demo}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <span className="relative z-10 flex items-center justify-center">
+                            <ExternalLink className="h-4 w-4 mr-2" />
+                            Demo
+                          </span>
+                          <motion.div
+                            className="absolute inset-0 bg-white/20"
+                            initial={{ scale: 0 }}
+                            whileHover={{ scale: 1 }}
+                            transition={{ duration: 0.3 }}
+                          />
+                        </a>
+                      </Button>
+                    </motion.div>
                   </div>
                 </Card>
               </motion.div>

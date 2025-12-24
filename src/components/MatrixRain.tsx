@@ -45,6 +45,18 @@ const MatrixRain = () => {
         const handleResize = () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            // Recalculate columns for new width
+            const newColumns = canvas.width / fontSize;
+            // Adjust drops array to match new column count
+            if (newColumns > drops.length) {
+                // Add new columns
+                for (let i = drops.length; i < newColumns; i++) {
+                    drops[i] = 1;
+                }
+            } else if (newColumns < drops.length) {
+                // Remove excess columns
+                drops.splice(newColumns);
+            }
         };
 
         window.addEventListener('resize', handleResize);
